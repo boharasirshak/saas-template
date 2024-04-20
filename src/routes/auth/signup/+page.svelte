@@ -43,7 +43,7 @@
 
 	<input type="submit" value="Signup" />
 
-	<a href="/login">Already have an account?</a>
+	<a href="/auth/login">Already have an account?</a>
 </form>
 
 <style>

@@ -31,8 +31,8 @@
 
 	<input type="submit" value="Login" />
 
-	<a href="/signup">Don't have an account?</a>
-	<a href="/forget-password">Forget password?</a>
+	<a href="/auth/signup">Don't have an account?</a>
+	<a href="/auth/forget-password">Forget password?</a>
 </form>
 
 <style>
