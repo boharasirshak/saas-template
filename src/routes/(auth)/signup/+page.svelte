@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { superForm } from "sveltekit-superforms";
+	import SuperDebug, { superForm } from "sveltekit-superforms";
 
 	export let data;
 
@@ -8,7 +8,9 @@
 
 {#if $message}<h3>{$message}</h3>{/if}
 
-<form use:enhance method="POST">
+<SuperDebug data={$form} />
+
+<form method="POST" use:enhance>
 	<label for="email">Email</label>
 	<input
 		type="text"
@@ -29,10 +31,19 @@
 	/>
 	{#if $errors.password}<span class="invalid">{$errors.password}</span>{/if}
 
-	<input type="submit" value="Login" />
+	<label for="confirm">Confirm Password</label>
+	<input
+		type="password"
+		name="confirm"
+		bind:value={$form.confirm}
+		aria-invalid={$errors.confirm ? "true" : undefined}
+		{...$constraints.confirm}
+	/>
+	{#if $errors.confirm}<span class="invalid">{$errors.confirm}</span>{/if}
 
-	<a href="/auth/signup">Don't have an account?</a>
-	<a href="/auth/forget-password">Forget password?</a>
+	<input type="submit" value="Signup" />
+
+	<a href="/login">Already have an account?</a>
 </form>
 
 <style>
