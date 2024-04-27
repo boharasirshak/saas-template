@@ -1,5 +1,7 @@
 <script lang="ts">
 	import CardWrapper from "$lib/components/auth/card-wrapper.svelte";
+	import FormError from "$lib/components/form-error.svelte";
+	import FormSuccess from "$lib/components/form-success.svelte";
 	import * as Form from "$lib/components/ui/form";
 	import { Input } from "$lib/components/ui/input";
 	import { loginSchema, type LoginSchema } from "$lib/schemas";
@@ -32,6 +34,7 @@
 					{...$constraints.email}
 					aria-invalid={$errors.email ? "true" : undefined}
 					bind:value={$formData.email}
+					placeholder="example@example.com"
 				/>
 			</Form.Control>
 			<Form.Description />
@@ -51,6 +54,9 @@
 			<Form.Description />
 			<Form.FieldErrors />
 		</Form.Field>
+
+		<FormError message="" />
+		<FormSuccess message="" />
 
 		<Form.Button class="item-center flex w-full flex-row justify-center">Submit</Form.Button>
 
