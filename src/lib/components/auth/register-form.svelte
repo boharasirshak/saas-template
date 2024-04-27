@@ -4,23 +4,23 @@
 	import FormSuccess from "$lib/components/form-success.svelte";
 	import * as Form from "$lib/components/ui/form";
 	import { Input } from "$lib/components/ui/input";
-	import { loginSchema, type LoginSchema } from "$lib/schemas";
+	import { registerSchema, type RegisterSchema } from "$lib/schemas";
 	import { superForm, type Infer, type SuperValidated } from "sveltekit-superforms";
 	import { zodClient } from "sveltekit-superforms/adapters";
 
-	export let data: SuperValidated<Infer<LoginSchema>>;
+	export let data: SuperValidated<Infer<RegisterSchema>>;
 
 	const form = superForm(data, {
-		validators: zodClient(loginSchema)
+		validators: zodClient(registerSchema)
 	});
 
 	const { form: formData, enhance, message, errors, constraints, submitting } = form;
 </script>
 
 <CardWrapper
-	headerLabel="Welcome Back"
-	backButtonLabel="Don't have an account?"
-	backButtonHref="/auth/register"
+	headerLabel="Create an new account"
+	backButtonLabel="Already have an account?"
+	backButtonHref="/auth/login"
 	showSocial
 >
 	<form use:enhance method="POST" class="flex w-full flex-col gap-3">
@@ -56,6 +56,22 @@
 			<Form.FieldErrors />
 		</Form.Field>
 
+		<Form.Field {form} name="confirm">
+			<Form.Control let:attrs>
+				<Form.Label>Confirm Password</Form.Label>
+				<Input
+					type="password"
+					{...attrs}
+					{...$constraints.confirm}
+					aria-invalid={$errors.confirm ? "true" : undefined}
+					bind:value={$formData.confirm}
+					disabled={$submitting}
+				/>
+			</Form.Control>
+			<Form.Description />
+			<Form.FieldErrors />
+		</Form.Field>
+
 		{#if $message}
 			{#if $message.type == "success"}
 				<FormSuccess message={$message.text} />
@@ -67,9 +83,5 @@
 		<Form.Button class="item-center flex w-full flex-row justify-center" disabled={$submitting}
 			>Submit</Form.Button
 		>
-
-		<div class="mt-5 flex flex-row items-center justify-center">
-			<a href="/auth/forget-password" class="text-sm hover:underline">Forget password?</a>
-		</div>
 	</form>
 </CardWrapper>

@@ -1,16 +1,16 @@
-import { loginSchema } from "$lib/schemas";
+import { registerSchema } from "$lib/schemas";
 import { type Actions } from "@sveltejs/kit";
 import { message, superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
 
 export const load = async () => {
-  const form = await superValidate(zod(loginSchema));
+  const form = await superValidate(zod(registerSchema));
   return { form };
 };
 
 export const actions: Actions = {
   default: async (event) => {
-    const form = await superValidate(event, zod(loginSchema));
+    const form = await superValidate(event, zod(registerSchema));
 
     if (!form.valid) {
       return message(
@@ -27,7 +27,7 @@ export const actions: Actions = {
 
     return message(form, {
       type: "success",
-      text: "Login Successful!"
+      text: "Registeration Successful!"
     });
   }
 };
